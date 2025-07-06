@@ -20,7 +20,6 @@ psutil==7.0.0
 pure_eval==0.2.3
 Pygments==2.19.2
 python-dateutil==2.9.0.post0
-pywin32==310
 pyzmq==27.0.0
 six==1.17.0
 stack-data==0.6.3
