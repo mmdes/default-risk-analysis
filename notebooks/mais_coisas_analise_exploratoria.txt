@@ -3,3 +3,16 @@ tranformar no_funcionarios em int
 
 
 DEIXAR BASE DE TESTES IGUAL BASE DE DESENVOLVIMENTO
+
+
+Estratégias:
+- buscar multicolinearidades para eliminar 
+- devido a alta cardinalidade de CEP_2_DIG, usar DDD. Aproveitar as informações de CEP_2_DIG para inputar valores em DDD -> MAIS DE 50 CATEGORIAS,
+indica alta cardinalidade, essas variáveis devem ser evitadas
+
+
+POR QUE USAREMOS XGBoost:
+- modelo de árvore, é um seletor de características natural 
+- lida bem com outliers
+-
+
