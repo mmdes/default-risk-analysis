@@ -1,0 +1,5 @@
+Distribuição de todas variáveis categóricas, como por exemplo CEP_2_DIG
+tranformar no_funcionarios em int 
+
+
+DEIXAR BASE DE TESTES IGUAL BASE DE DESENVOLVIMENTO
