@@ -7,12 +7,13 @@ DEIXAR BASE DE TESTES IGUAL BASE DE DESENVOLVIMENTO
 
 Estratégias:
 - buscar multicolinearidades para eliminar 
-- devido a alta cardinalidade de CEP_2_DIG, usar DDD. Aproveitar as informações de CEP_2_DIG para inputar valores em DDD -> MAIS DE 50 CATEGORIAS,
-indica alta cardinalidade, essas variáveis devem ser evitadas
+- fazer mais análises de CEP_2_DIG e eliminar uma inconsistência: um registro com 'na'. limpar 
+- Mais para analisar: distribuição das taxas e verificar se essa variável não pode ser tratada como categórica
 
 
 POR QUE USAREMOS XGBoost:
 - modelo de árvore, é um seletor de características natural 
 - lida bem com outliers
--
+
+
 
