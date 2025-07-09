@@ -1,2 +1,4 @@
 data/processed/merged_dataset.csv
 dra-env
+dra
+dashboard/pages/__pycache__

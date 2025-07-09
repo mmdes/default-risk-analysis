@@ -21,7 +21,7 @@ mkl_random==1.2.8
 mkl-service==2.4.0
 nest_asyncio==1.6.0
 numexpr==2.10.1
-numpy==2.0.1
+numpy>=1.24.3,<2.0.0
 packaging==25.0
 pandas==2.2.3
 parso==0.8.4
@@ -34,7 +34,6 @@ pure_eval==0.2.3
 Pygments==2.19.2
 python-dateutil==2.9.0.post0
 pytz==2024.1
-pywin32==304
 pyzmq==25.0.2
 scikit-learn==1.6.1
 scipy==1.15.3
