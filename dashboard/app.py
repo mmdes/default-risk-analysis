@@ -1,12 +1,13 @@
 import streamlit as st
-from pages import inicio
+from pages import inicio, eda, sistema_risk_predict
 
 
 
 def main():
     # Configurar o título da página e o ícone
+
     st.set_page_config(
-        page_title="",
+        page_title="Risk Predict",
         page_icon="./dashboard/assets/logo.png",
         initial_sidebar_state="expanded",
     )
@@ -52,12 +53,18 @@ def main():
         [
             "Início",
             "Análise Exploratória",
+            "Sistema Risk Predict"
         ],
     )
 
     # Renderizar a página selecionada
     if pagina_selecionada == "Início":
         inicio.show()
+    elif pagina_selecionada == "Análise Exploratória":
+        eda.show()
+    elif pagina_selecionada == "Sistema Risk Predict":
+        sistema_risk_predict.show()
+
 
 
 
