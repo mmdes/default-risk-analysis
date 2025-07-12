@@ -1,4 +1,4 @@
 data/processed/merged_dataset.csv
-dra-env
 dra
 dashboard/pages/__pycache__
+data/processed/final_random_forest_structure.pkl
