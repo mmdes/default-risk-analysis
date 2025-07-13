@@ -180,7 +180,7 @@ def show():
 
     st.markdown("---")
 
-    st.subheader("Amostras da Tabela de dados")
+    st.subheader("Amostras da tabela de dados")
     st.dataframe(df.head(100))
 
     st.markdown("---")
@@ -246,7 +246,7 @@ def show():
         st.plotly_chart(fig_metrics, use_container_width=True)
 
         # --- Matriz de Confusão com Plotly ---
-        st.subheader("Matriz de Confusão")
+        st.subheader("Matriz de confusão")
 
         # Extrai a matriz de confusão dos seus dados
         conf_matrix = dados['Confusion Matrix']
@@ -275,5 +275,5 @@ def show():
 
     st.markdown("---")
     
-    st.subheader("Desempenho dos modelo vencedor Random Forest - Hold-Out")
+    st.subheader("Desempenho do modelo vencedor Random Forest (em hold-out)")
 
