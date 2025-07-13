@@ -185,10 +185,10 @@ def show():
 
     st.markdown("---")
     
-    st.subheader("Desempenho dos modelos candidatos")
+    st.subheader("Desempenho dos modelos candidatos - Grid Search CV")
 
     # Abrindo e carregando o conteúdo
-    with open('./data/processed/resultados_grid_search_cv.pkl', 'rb') as arquivo:
+    with open('./dashboard/assets/resultados_grid_search_cv_v6.pkl', 'rb') as arquivo:
         objeto = pickle.load(arquivo)
 
     if arquivo:
@@ -272,4 +272,8 @@ def show():
 
         # Exibe o gráfico no Streamlit
         st.plotly_chart(fig_conf_plotly, use_container_width=True)
+
+    st.markdown("---")
+    
+    st.subheader("Desempenho dos modelo vencedor Random Forest - Hold-Out")
 
