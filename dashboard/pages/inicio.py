@@ -9,7 +9,7 @@ def show():
         <b>Bem-vindo(a) à página inicial da aplicação!</b> Este dashboard interativo 
         foi desenvolvido como parte do case técnico para a vaga de Cientista de Dados Trainee na Datarisk. 
         O objetivo deste projeto foi desenvolver um modelo preditivo capaz de estimar a inadimplência
-        de clientes com base em dados cadastrais, históricos e mensais. Durante a preparação dos dados,
+        de clientes com base em dados cadastrais e dados históricos mensais. Durante a preparação dos dados,
         foram aplicadas técnicas como <b>interpolação linear</b> para variáveis com tendência temporal, 
         estratégias de preenchimento como <b>backward fill</b> e <b>forward fill</b>, 
         além de <b>imputação hierárquica</b> com base em contexto, foi utilizado <b>mediana</b> e 
@@ -63,5 +63,3 @@ def show():
         """,
         unsafe_allow_html=True
     )
-
-
