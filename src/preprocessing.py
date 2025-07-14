@@ -12,23 +12,25 @@ def _imputar_hierarquia(df, target_col, group_hierarchy, strategy='median'):
     # Itera sobre a hierarquia de grupos
     for group in group_hierarchy:
         if strategy == 'mode':
-            # Para moda, precisamos de um lambda para pegar o primeiro valor
-            imputation_values = df.groupby(group)[target_col].transform(lambda x: x.mode()[0] if not x.mode().empty else np.nan)
+            # Para moda, ordene os resultados antes de pegar o primeiro para garantir determinismo
+            imputation_values = df.groupby(group)[target_col].transform(
+                lambda x: sorted(x.mode())[0] if not x.mode().empty else np.nan
+            )
         else:
             imputation_values = df.groupby(group)[target_col].transform(strategy)
         
         imputed_col = imputed_col.fillna(imputation_values)
         
-    # Aplica o fallback global final
+    # Aplica o fallback global final de forma determinística
     if strategy == 'median':
         global_fallback = df[target_col].median()
     else: # mode
-        global_fallback = df[target_col].mode()[0]
+        # Ordena a moda global também
+        global_fallback = sorted(df[target_col].mode())[0]
         
     imputed_col = imputed_col.fillna(global_fallback)
     
     return imputed_col
-
 
 # Faz o pré processamento dos dados antes da imputação
 def processar_dados(df, status, bar):
