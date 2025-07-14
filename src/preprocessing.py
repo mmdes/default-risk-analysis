@@ -58,6 +58,7 @@ def processar_dados(df, status, bar):
     )
 
     df['PRAZO_PAGAMENTO_DIAS'] = (df['DATA_VENCIMENTO'] - df['DATA_EMISSAO_DOCUMENTO']).dt.days
+    
     # tratando inconsistências nas datas (datas negativas)
     # Filtra apenas os prazos positivos
     prazos_validos = df[df['PRAZO_PAGAMENTO_DIAS'] >= 0]
@@ -242,7 +243,7 @@ def processar_dados(df, status, bar):
             cc[coluna] = cc[coluna].astype(float)
 
         if status:
-            status.info(f"Imputação hierárquica coluna: {coluna}, com estratégia: {estrategias.get(coluna)}")
+            status.info(f"Imputação hierárquica coluna: {coluna}. Estratégia: {estrategias.get(coluna)}")
 
         cc[coluna + '_INPUTED'] = _imputar_hierarquia(cc, coluna, hierar, strategy=estrategias.get(coluna))
 
@@ -327,7 +328,7 @@ def processar_dados(df, status, bar):
             cc[coluna] = cc[coluna].astype(float)
         
         if status:
-            status.info(f"Imputação hierárquica coluna: {coluna}, com estratégia: {estrategias.get(coluna)}")
+            status.info(f"Imputação hierárquica coluna: {coluna}. Estratégia: {estrategias.get(coluna)}")
 
         cc[coluna + '_INPUTED'] = _imputar_hierarquia(cc, coluna, hierar, strategy=estrategias.get(coluna))
 
