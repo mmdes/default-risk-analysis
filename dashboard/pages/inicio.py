@@ -23,8 +23,8 @@ def show():
         parâmetro <b>scale_pos_weight</b>. A escolha dos hiperparâmetros foi feita por meio de <b>Grid Search</b>
         com <b>validação cruzada</b>, garantindo uma busca mais eficiente por boas combinações. O modelo que 
         apresentou o melhor desempenho foi o <b>Random Forest</b>, alcançando um <b>ROC AUC de 0.96</b> e 
-        <b>F1-score de 0.73</b>, <b>Recall de 0.75</b> (métrica muito importante para modelos de inadimplÊncia) e 
-        <b> Precision de 0.71 </b> para a classe de inadimplentes (Classe 1). Este dashboard reúne de forma visual e 
+        <b>F1-score de 0.72</b>, <b>Recall de 0.76</b> (métrica muito importante para modelos de inadimplência) para a classe de inadimplentes 
+        (Classe 1). Este dashboard reúne de forma visual e 
         interativa algumas etapas do trabalho, da análise exploratória, engenharia de atributos à avaliação dos modelos,
         com o objetivo de tornar o processo mais transparente e facilitar a interpretação dos resultados. <b>Gostaria de agradecer
          pela oportunidade de participar deste case técnico.</b> Foi uma excelente forma de aplicar conhecimentos 
