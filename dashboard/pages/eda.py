@@ -26,13 +26,16 @@ def show():
         """Visão exploratória da base de dados após todas as etapas de tratamento e preparação."""
     )
 
-    # KPIs principais
-    col1, col2 = st.columns(2)
-    col1.metric("Total de Registros", f"{df.shape[0]:,}")
-    col2.metric("Clientes Únicos", f"{df['ID_CLIENTE'].nunique():,}")
-    col1, col2 = st.columns(2)
+    # Calcula os valores
+    total_registros = df.shape[0]
+    clientes_unicos = df['ID_CLIENTE'].nunique()
 
+    # Exibe os KPIs em colunas (convertendo para string simples)
+    col1, col2 = st.columns(2)
+    col1.metric("Total de registros", str(total_registros))
+    col2.metric("Clientes únicos", str(clientes_unicos))
     # col1.metric("% Inadimplentes", f"{df['TARGET_INADIMPLENCIA'].mean()*100:.2f}%")
+
     st.metric(
         "Período da emissão dos documentos:",
         f"{df['DATA_EMISSAO_DOCUMENTO'].min().strftime('%d/%m/%Y')} a {df['DATA_EMISSAO_DOCUMENTO'].max().strftime('%d/%m/%Y')}",
@@ -63,7 +66,7 @@ def show():
 
     st.plotly_chart(fig, use_container_width=True)
 
-    st.subheader("Inadimplência por Categoria")
+    st.subheader("Inadimplência por categoria")
 
     # Seleção da variável categórica
     variavel_cat = st.selectbox(
@@ -142,36 +145,47 @@ def show():
 
     st.plotly_chart(fig, use_container_width=True)
 
-    # Agrupa por ano
-    df["ANO_REF"] = df["DATA_EMISSAO_DOCUMENTO"].dt.year
-    serie_anual = df.groupby("ANO_REF")["TARGET_INADIMPLENCIA"].mean().reset_index()
+    
 
-    # Converte ano para string (categorias)
-    serie_anual["ANO_REF"] = serie_anual["ANO_REF"].astype(str)
+    # 1. GARANTIR QUE A COLUNA DE SAFRA É DO TIPO DATA
+    # Esta linha é crucial para evitar erros. Se a coluna já for datetime, não fará mal.
+    df['SAFRA_REF'] = pd.to_datetime(df['SAFRA_REF'])
+
+    # 2. Agrupa pelo ANO da SAFRA_REF
+    # Em vez de usar 'DATA_EMISSAO_DOCUMENTO', extraímos o ano da 'SAFRA_REF'.
+    df["ANO_SAFRA"] = df["SAFRA_REF"].dt.year
+    serie_por_safra = df.groupby("ANO_SAFRA")["TARGET_INADIMPLENCIA"].mean().reset_index()
+
+    # 3. Converte o ano para string (para o eixo categórico do gráfico)
+    # Isso garante que o eixo X mostre "2018", "2019", etc., de forma organizada.
+    serie_por_safra["ANO_SAFRA"] = serie_por_safra["ANO_SAFRA"].astype(str)
+
+
 
     # Gráfico de linha com eixo categórico
     fig = go.Figure()
 
     fig.add_trace(
         go.Scatter(
-            x=serie_anual["ANO_REF"],
-            y=serie_anual["TARGET_INADIMPLENCIA"],
+            # Usamos as novas colunas calculadas a partir da safra
+            x=serie_por_safra["ANO_SAFRA"],
+            y=serie_por_safra["TARGET_INADIMPLENCIA"],
             mode="lines+markers",
             line=dict(color="skyblue"),
             marker=dict(size=8),
-            name="Taxa de Inadimplência",
+            name="Taxa de Inadimplência por Safra",
         )
     )
 
     fig.update_layout(
-        title="Evolução Anual da Taxa de Inadimplência",
-        xaxis_title="Ano",
+        title="Evolução Anual da Taxa de Inadimplência por Safra",
+        xaxis_title="Ano da Safra",
         yaxis_title="Taxa de Inadimplência",
         xaxis=dict(type="category"),
         yaxis_tickformat=".1%",
-        template="plotly_dark",  # ou remova se estiver usando outro tema
+        template="plotly_dark",
     )
-
+    
     st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
@@ -181,7 +195,7 @@ def show():
 
     st.markdown("---")
 
-    st.subheader("Desempenho dos modelos candidatos (em Grid Search CV)")
+    st.subheader("Desempenho dos modelos candidatos (em GridSearchCV)")
 
     # Colocando os resultados do treinamento com cross validation e grid search
     # estático pois o treinamento é demorado. Assim não será obrigatório treinar

@@ -3,7 +3,7 @@ import textwrap
 
 
 def show():
-    st.image("./dashboard/assets/logo.png")
+    st.image("./assets/logo.png")
     st.title("Case Técnico - Cientista de Dados Trainee")
 
     texto = textwrap.dedent(

@@ -6,52 +6,53 @@ def main():
     # Configurar o título da página e o ícone
     st.set_page_config(
         page_title="Risk Predict",
-        page_icon="./dashboard/assets/mini-logo.png",
+        page_icon="./assets/mini-logo.png",
         initial_sidebar_state="expanded",
     )
 
-    # Injeção de css
     hide_streamlit_style = """
-    <style>
-    /* Esconde menus e marca d'água do Streamlit */
-    #MainMenu, footer, header, .stDeployButton, #stDecoration {
-        display: none;
-    }
+        <style>
+        /* Menu hamburguer padrão */
+        #MainMenu {visibility: hidden;}
+        /* Rodapé “Made with Streamlit” */
+        footer {visibility: hidden;}
+        /* Cabeçalho interno, se existir */
+        header {visibility: hidden;}
+        /* Botão “Deploy” no topo */
+        .stDeployButton {display: none;}
+        /* Container de decoração (engloba o texto “Deploy” + menu de três pontos) */
+        #stDecoration {display: none;}
 
-     /* Esconde o botão "Deploy" isolado */
-    [data-testid="stDeployButton"] {
-        display: none !important;
-    }
+        /* --- ADICIONADO AQUI --- */
+        /* Esconde o botão de expandir/recolher a barra lateral (a "double arrow") */
+        [data-testid="stSidebarCollapseButton"] {
+            display: none;
+        }
+        /* --- FIM DA ADIÇÃO --- */
 
-    /* Esconde o botão de status com "File change. Rerun..." */
-    [data-testid="stStatusWidget"] {
-        display: none;
-    }
-
-   
-
-    /* Esconde lista de páginas automática e linha acima da logo */
-    [data-testid="stSidebarNav"] ul, 
-    [data-testid="stSidebarNav"] hr {
-        display: none;
-    }
-
-    /* Personaliza o fundo da barra lateral */
-    [data-testid="stSidebar"] {
+        /* Ajuste de margem para subir seu conteúdo ao topo */
+        .reportview-container {margin-top: -2em;}
+        [data-testid="stSidebarNav"] { display: none; } 
+         [data-testid="stSidebar"] {
         background: linear-gradient(
             to bottom,
-            #ffffff 0%,
-            #555555 35%,
+            #ffffff 0%,    /* branco no topo */
+            #555555 35%,   /* cinza médio já em 20% */
             #0A0A0A 100%
         ) !important;
-    }
-    </style>
+        }
+        /* Garante que o gradiente cubra toda a altura */
+        [data-testid="stSidebar"] > div {
+            height: 100vh;
+        }
+        </style>
     """
-
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+   
+
 
     # Criação da barra lateral para navegação
-    st.sidebar.image("./dashboard/assets/logo.png", use_container_width=True)
+    st.sidebar.image("./assets/logo.png", use_container_width=True)
     st.sidebar.title("Navegação")
     pagina_selecionada = st.sidebar.selectbox(
         "Selecione uma página:",

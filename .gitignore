@@ -1,4 +1,10 @@
-data/processed/merged_dataset.csv
 dra
-dashboard/pages/__pycache__
+data/processed/merged_dataset.csv
+data/processed/cleaned_base_info.csv
+data/processed/cleaned_base_cadastral.csv
+data/processed/dataset_features_v1.csv
+data/processed/merged_dataset.csv
+data/processed/test_features_v1.csv
 data/processed/final_random_forest_structure.pkl
+dashboard/pages/__pycache__
+src/__pycache__
