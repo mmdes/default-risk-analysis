@@ -1,2 +1,10 @@
 [theme]
 base = "dark"
+primaryColor = "#1f77b4"      
+backgroundColor = "#0E1117"    
+secondaryBackgroundColor = "#299bcb"
+textColor = "#FAFAFA"
+font = "sans serif"
+
+[server]
+showDeployButton = false

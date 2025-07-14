@@ -2,16 +2,14 @@ import streamlit as st
 from pages import inicio, sistema_risk_predict, eda
 
 
-
 def main():
     # Configurar o título da página e o ícone
     st.set_page_config(
         page_title="Risk Predict",
-        page_icon="./dashboard/assets/mini-logo.png",
+        page_icon="./assets/mini-logo.png",
         initial_sidebar_state="expanded",
     )
 
-        # injeção de css
     hide_streamlit_style = """
         <style>
         /* Menu hamburguer padrão */
@@ -24,14 +22,22 @@ def main():
         .stDeployButton {display: none;}
         /* Container de decoração (engloba o texto “Deploy” + menu de três pontos) */
         #stDecoration {display: none;}
+
+        /* --- ADICIONADO AQUI --- */
+        /* Esconde o botão de expandir/recolher a barra lateral (a "double arrow") */
+        [data-testid="stSidebarCollapseButton"] {
+            display: none;
+        }
+        /* --- FIM DA ADIÇÃO --- */
+
         /* Ajuste de margem para subir seu conteúdo ao topo */
         .reportview-container {margin-top: -2em;}
         [data-testid="stSidebarNav"] { display: none; } 
          [data-testid="stSidebar"] {
         background: linear-gradient(
             to bottom,
-            #ffffff 0%,     /* branco no topo */
-            #555555 35%,    /* cinza médio já em 20% */
+            #ffffff 0%,    /* branco no topo */
+            #555555 35%,   /* cinza médio já em 20% */
             #0A0A0A 100%
         ) !important;
         }
@@ -42,18 +48,15 @@ def main():
         </style>
     """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+   
 
 
     # Criação da barra lateral para navegação
-    st.sidebar.image("./dashboard/assets/logo.png", use_container_width=True)
+    st.sidebar.image("./assets/logo.png", use_container_width=True)
     st.sidebar.title("Navegação")
     pagina_selecionada = st.sidebar.selectbox(
         "Selecione uma página:",
-        [
-            "Início",
-            "Dashboard",
-            "Sistema Risk Predict"
-        ],
+        ["Início", "Dashboard", "Sistema Risk Predict"],
     )
 
     # Renderizar a página selecionada
@@ -65,11 +68,9 @@ def main():
         sistema_risk_predict.show()
 
 
-
-
 # -----------------------------------------------------------------------------
 # PONTO DE ENTRADA PRINCIPAL
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    
+
     main()
