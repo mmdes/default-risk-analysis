@@ -185,7 +185,7 @@ def show():
 
     st.markdown("---")
     
-    st.subheader("Desempenho dos modelos candidatos - Grid Search CV")
+    st.subheader("Desempenho dos modelos candidatos (em Grid Search CV)")
 
     # Abrindo e carregando o conteúdo
     with open('./dashboard/assets/resultados_grid_search_cv_v6.pkl', 'rb') as arquivo:
@@ -204,7 +204,7 @@ def show():
         # st.json(dados['Melhores parâmetros'])
 
         # --- Exibe os scores principais ---
-        st.subheader("Principais Métricas")
+        #st.subheader("Principais Métricas")
         col1, col2, col3 = st.columns(3)
 
         col1.metric("ROC AUC (Validação)", f"{dados['ROC AUC (validação)']:.4f}")
@@ -277,3 +277,94 @@ def show():
     
     st.subheader("Desempenho do modelo vencedor Random Forest (em hold-out)")
 
+    # Carrega os resultados do hold-out
+    with open('./data/processed/resultados_holdout_random_forest.pkl', 'rb') as arquivo:
+        dados_holdout = pickle.load(arquivo)
+
+    if dados_holdout:
+        # --- Exibe os scores principais ---
+        #st.subheader("Principais Métricas - Hold-Out")
+        col1, col2, col3 = st.columns(3)
+        col1.metric("ROC AUC", f"{dados_holdout['ROC AUC']:.4f}")
+        col2.metric("Acurácia", f"{dados_holdout['Acurácia']:.4f}")
+        col3.metric("F1-Score (Classe 1)", f"{dados_holdout['F1-Score (Classe 1)']:.4f}")
+
+        # --- Gráfico de métricas por classe ---
+        st.subheader("Precision, Recall e F1-score por Classe")
+
+        metricas = ['Precisão (Classe 1)', 'Recall (Classe 1)', 'F1-Score (Classe 1)']
+        valores = [dados_holdout['Precisão (Classe 1)'],
+                   dados_holdout['Recall (Classe 1)'],
+                   dados_holdout['F1-Score (Classe 1)']]
+
+        df_metricas = pd.DataFrame({
+            'Métrica': ['Precision', 'Recall', 'F1-score'],
+            'Valor': valores,
+            'Classe': ['1'] * 3
+        })
+
+        fig_bar = px.bar(
+            df_metricas,
+            x='Métrica',
+            y='Valor',
+            color='Classe',
+            barmode='group',
+            title='Métricas por Classe (Classe 1)'
+        )
+        st.plotly_chart(fig_bar, use_container_width=True)
+
+        # --- Matriz de Confusão ---
+        st.subheader("Matriz de Confusão")
+
+        conf_matrix = dados_holdout['Confusion Matrix']
+        labels = ['Classe 0', 'Classe 1']
+
+        fig_conf = px.imshow(
+            conf_matrix,
+            labels=dict(x="Valores Previstos", y="Valores Reais", color="Contagem"),
+            x=labels,
+            y=labels,
+            text_auto=True,
+            color_continuous_scale='Blues_r'
+        )
+        fig_conf.update_layout(title_text="<b>Matriz de Confusão</b>", title_x=0.5)
+        st.plotly_chart(fig_conf, use_container_width=True)
+
+        
+        report_str = dados_holdout['Classification_report']
+
+        linhas = report_str.strip().split('\n')
+        colunas = linhas[0].strip().split()
+
+        linhas_dados = []
+        indices = []
+
+        for linha in linhas[1:]:
+            if linha.strip() == "":
+                continue
+            partes = linha.strip().split()
+
+            # Caso especial: linha de "accuracy" tem apenas 2 valores, pula ou trata separadamente
+            if partes[0] == "accuracy":
+                continue
+            
+            # Linhas com índice composto, tipo "macro avg" ou "weighted avg"
+            if not partes[0].isdigit() and len(partes) > 5:
+                nome = " ".join(partes[:-4])
+                valores = partes[-4:]
+            else:
+                nome = partes[0]
+                valores = partes[1:5]
+
+            try:
+                valores_float = list(map(float, valores))
+                indices.append(nome)
+                linhas_dados.append(valores_float)
+            except ValueError:
+                continue  # Pula qualquer linha mal formatada
+            
+        df_report = pd.DataFrame(linhas_dados, columns=colunas, index=indices)
+
+        # Exibe com formatação no Streamlit
+        st.subheader("Relatório de classificação estruturado")
+        st.dataframe(df_report.style.format("{:.4f}").background_gradient(cmap='Blues'))

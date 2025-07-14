@@ -5,27 +5,48 @@ import plotly.graph_objects as go
 import sys
 import os
 
-# Adiciona o diretório raiz do projeto ao sys.path
 sys.path.append(os.path.abspath(os.path.join('.')))
+
+# adicionando módulo próprio 
 from src.model_utils import predict 
 
 def show():
+
+    st.markdown(
+    """
+        <style>
+        .stProgress > div > div > div > div {
+            background-color: #FFFFFF;  /* Cor branca para a barra de carregamento */
+        }
+        </style>
+    """,
+    unsafe_allow_html=True
+    )
+
+
     st.title("Sistema Risk Predict")
 
     st.markdown("""
-    Faça o upload de um arquivo `.csv`. O arquivo deve estar separado por ponto e vírgula (;). Certifique-se de que ele possui as colunas: ID_CLIENTE, SAFRA_REF, DATA_EMISSAO_DOCUMENTO, DATA_VENCIMENTO, VALOR A PAGAR e TAXA.
+    Faça o upload de um arquivo `.csv`. O arquivo deve estar separado por ponto e vírgula (;). Certifique-se de que ele possua as colunas: ID_CLIENTE, SAFRA_REF, DATA_EMISSAO_DOCUMENTO, DATA_VENCIMENTO, VALOR A PAGAR e TAXA.
     """)
 
     uploaded_file = st.file_uploader("Upload do CSV", type="csv", help="O arquivo deve estar no formato .csv, separado por ponto e vírgula (;). Certifique-se de que ele possui as colunas: ID_CLIENTE, SAFRA_REF, DATA_EMISSAO_DOCUMENTO, DATA_VENCIMENTO, VALOR A PAGAR e TAXA.")
+    
 
     if uploaded_file is not None:
         # Lê o CSV enviado
         df_teste = pd.read_csv(uploaded_file, sep=';')
 
-        with st.spinner("Realizando a previsão..."):
-            submissao_case = predict(df_teste)
+        # Para mostrar o status do processamento
+        placeholder_status = st.empty()
 
-        st.success("Processamento concluído!")
+        # Barra de progresso
+        progress_bar = st.progress(0)
+        
+        with st.spinner("Realizando a previsão..."):
+            
+            submissao_case = predict(df_teste, placeholder_status, progress_bar)
+        
 
         # Mostra preview
         st.subheader("Prévia dos resultados (maiores chances de inadimplência)")

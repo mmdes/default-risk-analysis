@@ -2,6 +2,8 @@ import pandas as pd
 import sys
 import numpy as np
 import warnings
+
+
 warnings.filterwarnings("ignore")
 
 
@@ -34,7 +36,13 @@ def _imputar_hierarquia(df, target_col, group_hierarchy, strategy='median'):
 
 
 # Faz o pré processamento dos dados antes da imputação
-def processar_dados(df):
+def processar_dados(df, status, bar):
+
+    if status:
+        status.info("Iniciando tratamento dos dados...")
+
+    if bar:
+        bar.progress(0)
 
     # removend duplicadas da base de teste
     df = df.drop_duplicates(keep='last')
@@ -125,6 +133,9 @@ def processar_dados(df):
 
     cc = cc.sort_values(by=['ID_CLIENTE', 'DATA_EMISSAO_DOCUMENTO'])
 
+    if status:
+        status.info("Imputação dos dados que têm uma ordem natural com interpolação linear, backward fill e forward fill...")
+
     # realizando imputação de dados: interpolação linear, bfill e ffill
     cc['RENDA_MES_ANTERIOR'] = (
         cc
@@ -137,6 +148,9 @@ def processar_dados(df):
         .groupby('ID_CLIENTE')['NO_FUNCIONARIOS']
         .transform(lambda x: x.interpolate(method='linear').ffill().bfill().round().astype('Int64'))
     )
+
+    if bar:
+        bar.progress(20)
 
     # ajustando os tipos
     cc['SAFRA_REF'] = pd.to_datetime(
@@ -204,6 +218,15 @@ def processar_dados(df):
         'CEP_2_DIG':'mode',
     }
 
+    if status:
+        status.info("Iniciando imputação hierárquica com contexto...")
+
+    total_colunas = len(colunas_para_imputar)
+    progresso_inicial = 20
+    progresso_final = 80
+    step = (progresso_final - progresso_inicial) / total_colunas
+    progresso_atual = progresso_inicial
+    
     # Aplica a imputação hierárquica (imputação com contexto) para cada coluna da lista
     for coluna in colunas_para_imputar:
 
@@ -221,7 +244,8 @@ def processar_dados(df):
         if is_int:
             cc[coluna] = cc[coluna].astype(float)
 
-        print(f"Imputação hierárquica coluna: {coluna}, com estratégia: {estrategias.get(coluna)}")
+        if status:
+            status.info(f"Imputação hierárquica coluna: {coluna}, com estratégia: {estrategias.get(coluna)}")
 
         cc[coluna + '_INPUTED'] = _imputar_hierarquia(cc, coluna, hierar, strategy=estrategias.get(coluna))
 
@@ -232,6 +256,10 @@ def processar_dados(df):
             cc[coluna] = cc[coluna + '_INPUTED']
         cc.drop(columns=[coluna + '_INPUTED'], inplace=True)
 
+        progresso_atual += step
+        if bar:
+            bar.progress(int(progresso_atual))
+      
 
     # criando as features pro dataset concateanado
     cc['TEMPO_CADASTRO_PARA_VENCIMENTO'] = (cc['DATA_VENCIMENTO'] - cc['DATA_CADASTRO']).dt.days
@@ -278,6 +306,12 @@ def processar_dados(df):
         'TEMPO_DE_CASA_MESES': 'median',
     }
 
+    total_colunas = len(colunas_para_imputar)
+    progresso_inicial = 80
+    progresso_final = 95
+    step = (progresso_final - progresso_inicial) / total_colunas
+    progresso_atual = progresso_inicial
+
     # Aplica a imputação hierárquica (imputação com contexto) para cada coluna da lista
     for coluna in colunas_para_imputar:
 
@@ -294,8 +328,9 @@ def processar_dados(df):
 
         if is_int:
             cc[coluna] = cc[coluna].astype(float)
-
-        print(f"Imputação hierárquica coluna: {coluna}, com estratégia: {estrategias.get(coluna)}")
+        
+        if status:
+            status.info(f"Imputação hierárquica coluna: {coluna}, com estratégia: {estrategias.get(coluna)}")
 
         cc[coluna + '_INPUTED'] = _imputar_hierarquia(cc, coluna, hierar, strategy=estrategias.get(coluna))
 
@@ -306,11 +341,19 @@ def processar_dados(df):
             cc[coluna] = cc[coluna + '_INPUTED']
         cc.drop(columns=[coluna + '_INPUTED'], inplace=True)
 
+        progresso_atual += step
+        if bar:
+            bar.progress(int(progresso_atual))
+
 
     # reconstrução do datasets com as features
     test_features_v1 = cc[cc['EH_DEV']==0]
     
     # removendo colunas desnecessárias
     test_features_v1 = test_features_v1.drop(columns=['EH_DEV', 'DATA_PAGAMENTO', 'DIAS_ATRASO', 'TARGET_INADIMPLENCIA', 'DIAS_ADIANTAMENTO'])
+
+
+    if bar:
+        bar.progress(100)
 
     return(test_features_v1) 

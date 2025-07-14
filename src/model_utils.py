@@ -3,6 +3,8 @@ import os
 import pickle
 import pandas as pd
 import importlib
+#import streamlit as st
+
 sys.dont_write_bytecode = True
 # Adiciona o diretório raiz do projeto ao sys.path
 sys.path.append(os.path.abspath(os.path.join('.')))
@@ -12,9 +14,9 @@ import src.preprocessing
 importlib.reload(src.preprocessing)
 from src.preprocessing import processar_dados
 
-def predict(df_teste):
+def predict(df_teste, status, bar):
 
-    test_features_v1 = processar_dados(df_teste)
+    test_features_v1 = processar_dados(df_teste, status, bar)
 
     # Eliminar colunas irrelevantes para predição
     cols_drop = [
@@ -40,6 +42,9 @@ def predict(df_teste):
 
     # Prevendo as probabilidades
     y_proba = modelo.predict_proba(X_new)
+
+    if status:
+        status.info("Processamento concluído com sucesso!")
 
     # Construindo tabela de submissão 
     submissao_case = test_features_v1[['ID_CLIENTE', 'SAFRA_REF']].copy()
