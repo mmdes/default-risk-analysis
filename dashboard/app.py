@@ -10,36 +10,44 @@ def main():
         initial_sidebar_state="expanded",
     )
 
-    # injeção de css
+    # Injeção de css
     hide_streamlit_style = """
-        <style>
-        /* Menu hamburguer padrão */
-        #MainMenu {visibility: hidden;}
-        /* Rodapé “Made with Streamlit” */
-        footer {visibility: hidden;}
-        /* Cabeçalho interno, se existir */
-        header {visibility: hidden;}
-        /* Botão “Deploy” no topo */
-        .stDeployButton {display: none;}
-        /* Container de decoração (engloba o texto “Deploy” + menu de três pontos) */
-        #stDecoration {display: none;}
-        /* Ajuste de margem para subir seu conteúdo ao topo */
-        .reportview-container {margin-top: -2em;}
-        [data-testid="stSidebarNav"] { display: none; } 
-         [data-testid="stSidebar"] {
+    <style>
+    /* Esconde menus e marca d'água do Streamlit */
+    #MainMenu, footer, header, .stDeployButton, #stDecoration {
+        display: none;
+    }
+
+     /* Esconde o botão "Deploy" isolado */
+    [data-testid="stDeployButton"] {
+        display: none !important;
+    }
+
+    /* Esconde o botão de status com "File change. Rerun..." */
+    [data-testid="stStatusWidget"] {
+        display: none;
+    }
+
+   
+
+    /* Esconde lista de páginas automática e linha acima da logo */
+    [data-testid="stSidebarNav"] ul, 
+    [data-testid="stSidebarNav"] hr {
+        display: none;
+    }
+
+    /* Personaliza o fundo da barra lateral */
+    [data-testid="stSidebar"] {
         background: linear-gradient(
             to bottom,
-            #ffffff 0%,     /* branco no topo */
-            #555555 35%,    /* cinza médio já em 20% */
+            #ffffff 0%,
+            #555555 35%,
             #0A0A0A 100%
         ) !important;
-        }
-        /* Garante que o gradiente cubra toda a altura */
-        [data-testid="stSidebar"] > div {
-            height: 100vh;
-        }
-        </style>
+    }
+    </style>
     """
+
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
     # Criação da barra lateral para navegação
