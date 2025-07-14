@@ -6,5 +6,6 @@ data/processed/dataset_features_v1.csv
 data/processed/merged_dataset.csv
 data/processed/test_features_v1.csv
 data/processed/final_random_forest_structure.pkl
+data/processed/resultados_holdout_random_forest.pkl
 dashboard/pages/__pycache__
 src/__pycache__

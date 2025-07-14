@@ -117,3 +117,17 @@ Esta página permite realizar previsões de risco de inadimplência através do 
 2. **Arquivo Carregado:** Após o upload, o nome do arquivo aparecerá abaixo da área de upload. Você pode remover o arquivo carregado clicando no ícone de "X" ao lado do nome do arquivo.
 3. **Realizando a previsão:** Após carregar o arquivo e selecionar a coluna de imputação, a aplicação iniciará automaticamente o processo de leitura e previsão dos dados. Uma barra de progresso "Realizando a previsão..." será exibida.
 4. **Download dos resultados:** Ao final do processamento, um botão de download será disponibilizado para você baixar um arquivo CSV contendo as previsões de risco de inadimplência para os dados fornecidos. Será gerado também um gráfico de dispersão da inadimplência para os registros atualizados e um gráfico de pizza com o percentual de amostras com probabilidade igual ou maior a 50% de inadimplência.
+
+
+
+# Referência Principal
+
+
+**GÉRON, Aurélien.** *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems.* 2ª edição. O’Reilly Media, 2019.
+
+A obra serviu de base para diversas decisões no pipeline, como:
+- Adoção de modelos robustos como Random Forest, XGBoost e Regressão Logística;
+- Uso de pipelines com `StandardScaler` para algoritmos sensíveis à escala;
+- Aplicação de `SMOTE` para lidar com o desbalanceamento de classes;
+- Estratégia de validação com `GridSearchCV` utilizando `StratifiedKFold` e otimização baseada em ROC AUC.
+
