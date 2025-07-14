@@ -2,12 +2,7 @@ import pandas as pd
 import sys
 import numpy as np
 import warnings
-
-
 warnings.filterwarnings("ignore")
-
-
-sys.dont_write_bytecode = True
 
 # Realiza a imputação hierárquica em uma coluna.
 def _imputar_hierarquia(df, target_col, group_hierarchy, strategy='median'):

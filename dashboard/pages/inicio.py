@@ -1,11 +1,13 @@
 import streamlit as st
 import textwrap
 
+
 def show():
     st.image("./dashboard/assets/logo.png")
     st.title("Case Técnico - Cientista de Dados Trainee")
 
-    texto = textwrap.dedent("""
+    texto = textwrap.dedent(
+        """
         <b>Bem-vindo(a) à página inicial da aplicação!</b> Este dashboard interativo 
         foi desenvolvido como parte do case técnico para a vaga de Cientista de Dados Trainee na Datarisk. 
         O objetivo deste projeto foi desenvolver um modelo preditivo capaz de estimar a inadimplência
@@ -28,20 +30,21 @@ def show():
          pela oportunidade de participar deste case técnico.</b> Foi uma excelente forma de aplicar conhecimentos 
         em um contexto prático e desafiador, alinhado com problemas reais enfrentados no mercado. Independentemente do 
         resultado, a experiência já representa um aprendizado valioso.
-    """)
-
+    """
+    )
 
     # Remove quebras de linha para que o texto seja exibido corretamente
     texto = texto.replace("\n", " ")
 
-
-    st.markdown(f"""
+    st.markdown(
+        f"""
         <div style="text-align: justify; font-size: 16px;">
             {texto}
         </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
-    
     st.markdown(
         """
         <style>
@@ -61,5 +64,5 @@ def show():
             <span style="vertical-align: middle;">Use a barra lateral à esquerda para navegar entre as páginas.</span>
         </div>
         """,
-        unsafe_allow_html=True
+        unsafe_allow_html=True,
     )

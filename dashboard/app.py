@@ -2,7 +2,6 @@ import streamlit as st
 from pages import inicio, sistema_risk_predict, eda
 
 
-
 def main():
     # Configurar o título da página e o ícone
     st.set_page_config(
@@ -11,7 +10,7 @@ def main():
         initial_sidebar_state="expanded",
     )
 
-        # injeção de css
+    # injeção de css
     hide_streamlit_style = """
         <style>
         /* Menu hamburguer padrão */
@@ -43,17 +42,12 @@ def main():
     """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-
     # Criação da barra lateral para navegação
     st.sidebar.image("./dashboard/assets/logo.png", use_container_width=True)
     st.sidebar.title("Navegação")
     pagina_selecionada = st.sidebar.selectbox(
         "Selecione uma página:",
-        [
-            "Início",
-            "Dashboard",
-            "Sistema Risk Predict"
-        ],
+        ["Início", "Dashboard", "Sistema Risk Predict"],
     )
 
     # Renderizar a página selecionada
@@ -65,11 +59,9 @@ def main():
         sistema_risk_predict.show()
 
 
-
-
 # -----------------------------------------------------------------------------
 # PONTO DE ENTRADA PRINCIPAL
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    
+
     main()

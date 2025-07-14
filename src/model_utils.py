@@ -3,15 +3,11 @@ import os
 import pickle
 import pandas as pd
 import importlib
-#import streamlit as st
 
-sys.dont_write_bytecode = True
 # Adiciona o diretório raiz do projeto ao sys.path
 sys.path.append(os.path.abspath(os.path.join('.')))
 
-# módulos próprios
-import src.preprocessing
-importlib.reload(src.preprocessing)
+# Adicionando módulo próprio
 from src.preprocessing import processar_dados
 
 def predict(df_teste, status, bar):
