@@ -60,7 +60,7 @@ def show():
         dados_pizza,
         names="Status",
         values="Quantidade",
-        title="Perceuntual de Inadimplência",
+        title="Percentual de Inadimplência",
         hole=0.4,  # se quiser formato de doughnut
     )
 
@@ -173,12 +173,12 @@ def show():
             mode="lines+markers",
             line=dict(color="skyblue"),
             marker=dict(size=8),
-            name="Taxa de Inadimplência por Safra",
+            name="Taxa de Inadimplência por Ano",
         )
     )
 
     fig.update_layout(
-        title="Evolução Anual da Taxa de Inadimplência por Safra",
+        title="Evolução Anual da Taxa de Inadimplência por ano",
         xaxis_title="Ano da Safra",
         yaxis_title="Taxa de Inadimplência",
         xaxis=dict(type="category"),
