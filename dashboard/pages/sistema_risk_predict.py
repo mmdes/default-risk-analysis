@@ -24,7 +24,7 @@ def show():
         unsafe_allow_html=True,
     )
 
-    st.title("Sistema Risk Predict")
+    st.title("Sistema Risk Predictor")
 
     st.markdown(
         """

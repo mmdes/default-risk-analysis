@@ -1,13 +1,13 @@
 # default-risk-analysis
 
-Este projeto foi desenvolvido como parte de um case técnico da Datarisk, com o objetivo de prever a inadimplência em cobranças mensais com base em dados cadastrais, histórico de pagamentos e perfil dos clientes. Conforme o enunciado do case, a proposta do desafio simula um cenário real dentro da empresa. Pensando nisso, foi criada uma interface interativa com Streamlit, que facilita a visualização dos dados, métricas e previsões de forma simples e acessível. A seguir, estão as informações sobre a estrutura do projeto e como executar os notebooks e a aplicação.
+Este projeto foi desenvolvido como parte de um case técnico, com o objetivo de prever a inadimplência em cobranças mensais com base em dados cadastrais, histórico de pagamentos e perfil dos clientes. Conforme o enunciado do case, a proposta do desafio simula um cenário real dentro da empresa. Pensando nisso, foi criada uma interface interativa com Streamlit, que facilita a visualização dos dados, métricas e previsões de forma simples e acessível. A seguir, estão as informações sobre a estrutura do projeto e como executar os notebooks e a aplicação.
 
 # Entendendo os diretórios
 
 ## `assets`
 
 * Contém os arquivos de imagem utilizados para ilustrar o arquivo `README.md`.
-  * **logo.png** e **mini-logo.png**: Logotipos da Datarisk usados na interface do Streamlit.
+  * **logo.png**, **logo2.png** e **mini-logo.png**: Logotipos usados na interface do Streamlit.
   * **pages.png**: Print da tela inicial da aplicação (para a documentação).
   * **dash.png**: Print da tela de dashboard com as métricas do modelo (para a documentação).
   * **risk-predict.png**: Print da tela do sistema de previsão de risco (para a documentação).
@@ -95,7 +95,7 @@ Esta é a página principal, que apresenta um resumo do case técnico e do objet
 
 ![Tela Inicial](./assets/pages.png)
 
-1. **Selecione uma página:** No topo da barra lateral, há um menu dropdown chamado "Selecione uma página:". Clique nele para visualizar as opções de navegação: "Início", "Dashboard" e "Sistema Risk Predict".
+1. **Selecione uma página:** No topo da barra lateral, há um menu dropdown chamado "Selecione uma página:". Clique nele para visualizar as opções de navegação: "Início", "Dashboard" e "Sistema Risk Predictor".
 2. **Navegação:** Clique em cada uma das opções para acessar as respectivas páginas da aplicação.
 
 **Tela de Dashboard:**
@@ -107,27 +107,24 @@ Esta página exibe alguns gráficos de exploração dos dados após todos os tra
 1. **Visualização:** Ao acessar a página "Dashboard" através do menu de navegação, você poderá visualizar algumas análises dos dados.
 2. **Relatório de Classificação:** Há também informações específicas de desempenho dos modelos testados como da matriz de confusão e relatório de classificação, com métricas importantes como precisão, recall, f1-score e suporte para cada classe e para as médias macro e ponderada.
 
-**Tela de Sistema Risk Predict:**
+**Tela de Sistema Risk Predictor:**
 
 Esta página permite realizar previsões de risco de inadimplência através do upload de um arquivo CSV.
 
-![Tela de Sistema Risk Predict](./assets/risk-predict.png)
+![Tela de Sistema Risk Predictor](./assets/risk-predict.png)
 
 1. **Upload do CSV:** Na seção "Upload do CSV", você encontrará uma área para arrastar e soltar o arquivo CSV contendo os dados a serem previstos. O arquivo deve seguir o formato especificado, com colunas separadas por ponto e vírgula (`;`) e com as colunas: `ID_CLIENTE`, `SAFRA_REF`, `DATA_EMISSAO_DOCUMENTO`, `DATA_VENCIMENTO`, `VALOR_A_PAGAR` e `TAXA`. O limite de tamanho por arquivo é de 200MB. Você também pode clicar em "Browse Files" para selecionar o arquivo através do explorador de arquivos do seu sistema.
 2. **Arquivo Carregado:** Após o upload, o nome do arquivo aparecerá abaixo da área de upload. Você pode remover o arquivo carregado clicando no ícone de "X" ao lado do nome do arquivo.
 3. **Realizando a previsão:** Após carregar o arquivo e selecionar a coluna de imputação, a aplicação iniciará automaticamente o processo de leitura e previsão dos dados. Uma barra de progresso "Realizando a previsão..." será exibida.
 4. **Download dos resultados:** Ao final do processamento, um botão de download será disponibilizado para você baixar um arquivo CSV contendo as previsões de risco de inadimplência para os dados fornecidos. Será gerado também um gráfico de dispersão da inadimplência para os registros atualizados e um gráfico de pizza com o percentual de amostras com probabilidade igual ou maior a 50% de inadimplência.
 
-
-
 # Referência Principal
-
 
 **GÉRON, Aurélien.** *Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems.* 2ª edição. O’Reilly Media, 2019.
 
 A obra serviu de base para diversas decisões no pipeline, como:
+
 - Adoção de modelos robustos como Random Forest, XGBoost e Regressão Logística;
 - Uso de pipelines com `StandardScaler` para algoritmos sensíveis à escala (Regressão Logística por exemplo);
 - Aplicação de `SMOTE` para lidar com o desbalanceamento de classes;
 - Estratégia de validação com `GridSearchCV` utilizando `StratifiedKFold` e otimização baseada em ROC AUC.
-

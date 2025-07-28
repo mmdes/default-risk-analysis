@@ -1,15 +1,27 @@
 import streamlit as st
 import textwrap
-
+from PIL import Image
 
 def show():
-    st.image("./assets/logo.png")
-    st.title("Case Técnico - Cientista de Dados Trainee")
+
+    # Carrega a imagem
+    image = Image.open("./assets/logo2.png")
+
+    # Reduz a 50% do tamanho original
+    width, height = image.size
+    new_size = (width // 2, height // 2)
+
+    # Cria três colunas e coloca a imagem na coluna do meio
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.image(image.resize(new_size))
+
+    st.title("Case Técnico - Ciência de Dados")
 
     texto = textwrap.dedent(
         """
         <b>Bem-vindo(a) à página inicial da aplicação!</b> Este dashboard interativo 
-        foi desenvolvido como parte do case técnico para a vaga de Cientista de Dados Trainee na Datarisk. 
+        foi desenvolvido como parte do case técnico em Cientista de Dados. 
         O objetivo deste projeto foi desenvolver um modelo preditivo capaz de estimar a inadimplência
         de clientes com base em dados cadastrais e dados históricos mensais. Durante a preparação dos dados,
         foram aplicadas técnicas como <b>interpolação linear</b> para variáveis com tendência temporal, 
@@ -26,11 +38,9 @@ def show():
         <b>F1-score de 0.72</b>, <b>Recall de 0.76</b> (métrica muito importante para modelos de inadimplência) para a classe de inadimplentes 
         (Classe 1). Este dashboard reúne de forma visual e 
         interativa algumas etapas do trabalho, da análise exploratória, engenharia de atributos à avaliação dos modelos,
-        com o objetivo de tornar o processo mais transparente e facilitar a interpretação dos resultados. <b>Gostaria de agradecer
-         pela oportunidade de participar deste case técnico.</b> Foi uma excelente forma de aplicar conhecimentos 
-        em um contexto prático e desafiador, alinhado com problemas reais enfrentados no mercado. Independentemente do 
-        resultado, a experiência já representa um aprendizado valioso.
-    """
+        com o objetivo de tornar o processo mais transparente e facilitar a interpretação dos resultados.
+
+        """
     )
 
     # Remove quebras de linha para que o texto seja exibido corretamente

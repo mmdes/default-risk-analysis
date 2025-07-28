@@ -5,7 +5,7 @@ from pages import inicio, sistema_risk_predict, eda
 def main():
     # Configurar o título da página e o ícone
     st.set_page_config(
-        page_title="Risk Predict",
+        page_title="Risk Predictor",
         page_icon="./assets/mini-logo.png",
         initial_sidebar_state="expanded",
     )
@@ -56,7 +56,7 @@ def main():
     st.sidebar.title("Navegação")
     pagina_selecionada = st.sidebar.selectbox(
         "Selecione uma página:",
-        ["Início", "Dashboard", "Sistema Risk Predict"],
+        ["Início", "Dashboard", "Sistema Risk Predictor"],
     )
 
     # Renderizar a página selecionada
@@ -64,7 +64,7 @@ def main():
         inicio.show()
     elif pagina_selecionada == "Dashboard":
         eda.show()
-    elif pagina_selecionada == "Sistema Risk Predict":
+    elif pagina_selecionada == "Sistema Risk Predictor":
         sistema_risk_predict.show()
 
 
