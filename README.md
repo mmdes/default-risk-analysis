@@ -124,7 +124,7 @@ Esta página permite realizar previsões de risco de inadimplência através do 
 
 A obra serviu de base para diversas decisões no pipeline, como:
 
-- Adoção de modelos robustos como Random Forest, XGBoost e Regressão Logística;
+- Adoção de modelos robustos como Random Forest, XGBoost e LightGBM;
 - Uso de pipelines com `StandardScaler` para algoritmos sensíveis à escala (Regressão Logística por exemplo);
 - Aplicação de `SMOTE` para lidar com o desbalanceamento de classes;
 - Estratégia de validação com `GridSearchCV` utilizando `StratifiedKFold` e otimização baseada em ROC AUC.
